@@ -58,6 +58,6 @@ def video2signal(cap:cv2.VideoCapture) -> list:
         cv2.imwrite(f'./byproduct/0/frames/frame-{idx+1}.jpg', array3)    
 
         # DEBUG: only process the first frame 
-        break
+        # break
 
     return signals
