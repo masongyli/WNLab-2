@@ -5,8 +5,8 @@
 2. A `H` or `L` in a delimiter spans about 6 pixels
 
 ### Position of double *Da*s
-- The 14th frame of `0.mp4` contains double *Da*s
-- The 25th frame of `14.mp4` contains double *Da*s
+- The 14th, 44th, 74th frame of `0.mp4` contains double *Da*s
+- The 25th, 55th, 85th frame of `14.mp4` contains double *Da*s
 
 ### Property of autocorrelation
 If there is a local minimum, then it should be one of the followings:

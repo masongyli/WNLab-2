@@ -37,7 +37,7 @@ def video2signal(cap:cv2.VideoCapture) -> list:
         thresholded_img = cv2.vconcat([r for r in thresholded_row_imgs])
 
         # DEBUG: observe the result of Otsu threadsholding
-        cv2.imwrite(f'./byproduct/0/otsu-threadshold-by-raw/otsu_threadshold-by_row-{idx+1}.jpg', thresholded_img)
+        # cv2.imwrite(f'./byproduct/0/otsu-threadshold-by-raw/otsu_threadshold-by_row-{idx+1}.jpg', thresholded_img)
 
         # Signalize
         signal = []
@@ -57,7 +57,7 @@ def video2signal(cap:cv2.VideoCapture) -> list:
         array3 = np.reshape(array2, (1, 1080))
         cv2.imwrite(f'./byproduct/0/frames/frame-{idx+1}.jpg', array3)    
 
-        # # DEBUG: only process the first frame 
-        # break
+        # DEBUG: only process the first frame 
+        break
 
     return signals
