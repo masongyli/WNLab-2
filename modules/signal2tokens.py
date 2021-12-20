@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from scipy.signal import argrelextrema
 
-# BIT_0        = [ 1,  1,  1,  1,  1,  1,  1, -1, -1, -1, -1, -1, -1, -1]
-# BIT_1        = [-1, -1, -1, -1, -1, -1, -1,  1,  1,  1,  1,  1,  1,  1]
 DELIMITER_DA = [-1, -1, -1,  1,  1,  1, -1,  1,  1,  1, -1,  1,  1, -1,  1]
 DELIMITER_DB = [ 1,  1,  1, -1, -1, -1,  1, -1, -1, -1,  1, -1, -1,  1, -1]
 DELIMITER_FA = [-1, -1, -1, -1,  1, -1,  1, -1, -1,  1,  1, -1, -1,  1]
@@ -65,14 +63,17 @@ def signal2tokens(signals:list) -> list:
     # plt.savefig(f'./byproduct/0/autocorrelations/autocorrelation-{idx+1}.jpg')
     # plt.clf()
 
-
     # find the position of bit 0 and bit 1 (positions of transition)
-    transition_position = get_transition_position(signal)
+    # transition_position = get_transition_position(signal)
     min_positions = argrelextrema(np.array(autocorrelations), np.less)[0]
-    token_sequence = get_token_sequence(signal, transition_position, min_positions)
+    # token_sequence = get_token_sequence(signal, transition_position, min_positions)
+    token_sequence = get_token_sequence(signal, min_positions)
     token_sequences.append(token_sequence)
 
-    print(token_sequence)
+    # DEBUG: observe tokens
+    with open(f'./byproduct/0/tokens/tokens-{idx+1}', 'w') as file:
+      writer = csv.writer(file)
+      writer.writerow(token_sequence)
   
   return token_sequences 
 
@@ -84,19 +85,10 @@ def getAutocorrelation(signal:list) -> int:
            sum = sum + signal[i] * signal[i + diff]
     return sum
 
-def get_token_sequence(signal:list, transition_position:list, min_positions:list) -> list:
-
-  # observation
-  # bit 0/1 will not appearl consecutively
-  # only delimiter da can appear consecutively
-  # a frame can contains at most 4 tokens  (eg: 1 da da 1)
-  # so if the result is   ? 3 ?   then ? = bit 0 or bit 1 
-
+def get_token_sequence(signal:list, min_positions:list) -> list:
   # check whether there is double da?
 
   # check whether it's  bit_0 or bit_1 ?
-
-
 
   token_ids = []
   for pos in min_positions:
@@ -115,5 +107,8 @@ def get_token_sequence(signal:list, transition_position:list, min_positions:list
 # issue: some delimiter looks like bit_0 or bit_1  in  a small scale
 # issue: double da is weird on the graph of autocorrelation
 
-# def get_transition_position(signal:list):
-#   for idx, s in enumerate(signal): 
+# observation
+# bit 0/1 will not appearl consecutively
+# only delimiter da can appear consecutively
+# a frame can contains at most 4 tokens  (eg: 1 da da 1)
+# so if the result is   ? 3 ?   then ? = bit 0 or bit 1 

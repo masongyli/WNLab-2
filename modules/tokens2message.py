@@ -1,4 +1,4 @@
-from Packet import Packet
+from modules.Packet import Packet
 
 def tokens2message(tokens):
  
