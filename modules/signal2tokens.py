@@ -97,9 +97,25 @@ def get_token_sequence(signal:list, min_positions:list) -> list:
     s = signal[pos:pos + AUTOCORRELATION_LENGTH]
     for idx, token in enumerate(TOKEN_EXTEND):
       curr_r = np.corrcoef(s, token)[0, 1]
-      if curr_r > r:
-        r = curr_r
-        token_id = idx
+      if curr_r <= r:
+        continue
+
+      if idx == 0 or idx == 1:
+        if pos < 200 or pos > 880:
+          continue
+        # left -200 ~ -50 都相同
+        b1 = signal[pos-200]
+        for i in signal[pos-200:pos-50]:
+          if i != b1:
+            continue
+        
+        # left 50 ~ 200
+        b2 = signal[pos+50]
+        for i in signal[pos+50:pos+200]:
+          if i != b2:
+            continue
+      r = curr_r
+      token_id = idx
     token_ids.append(token_id)
   return token_ids
 

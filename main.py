@@ -17,11 +17,11 @@ def convert_video_to_signal_csv(video_name, save=True):
     tokens = signal2tokens(signals)
     print('Convert done.')
 
-    print('Convert tokens to message')
-    message = tokens2message(tokens)
-    print('Convert done')
+    # print('Convert tokens to message')
+    # message = tokens2message(tokens)
+    # print('Convert done')
     
-    print(f'The message: {message}')
+    # print(f'The message: {message}')
 
 if __name__ == '__main__':
 
